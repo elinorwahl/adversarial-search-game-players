@@ -187,20 +187,19 @@ class MonteCarloUCTPlayer(DataPlayer):
         """ Locate and backpropagate nodes along the search tree, corresponding 
         to moves which frequently lead to wins in rollout simulation games.
         """
-        # if 'TIME_LIMIT' in globals():
-            # buffer = 50.
-            # delta = (TIME_LIMIT-buffer) / 1000.
-        # else:
-            # delta = 0.1
-        # timer_end  = time.time() + delta
+        if 'TIME_LIMIT' in globals():
+            # buffer = 50. # for slower but better performance
+            buffer = 75. # for faster but decreased performance
+            delta = (TIME_LIMIT-buffer) / 1000.
+        else:
+            # delta = 0.1 # for slower but better performance
+            delta = 0.025 # for faster but decreased performance
+        timer_end  = time.time() + delta
         root = Node(state)
         if root.state.terminal_test():
             return random.choice(state.actions())
-        # while time.time() < timer_end:
-        for i in range(1, 100):
+        while time.time() < timer_end:
             leaf = self.tree_policy(root)
-            if not leaf:
-                continue
             value = self.rollout_policy(leaf, state.player())
             self.backprop(leaf, value)
         result = root.children.index(self.best_child(root, 0))
