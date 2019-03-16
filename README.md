@@ -52,7 +52,7 @@ However - the Monte Carlo agent takes considerably longer to play matches than t
         root = Node(state)
         if root.state.terminal_test():
             return random.choice(state.actions())
-        while time.time() < timer_end:
+      simple  while time.time() < timer_end:
             leaf = self.tree_policy(root)
             value = self.rollout_policy(leaf, state.player())
             self.backprop(leaf, value)
@@ -81,7 +81,7 @@ This agent, while extremely successful at Isolation, runs slowly enough that it 
         return root.child_actions[result]
 ```
 
-This simple change makes the Monte Carlo tree search run much faster, but with a serious impact on performance. With this in effect, the Monte Carlo agent won 71% of 100 matches against the minimax agent. Furthermore, running it often resulted in a hung terminal. Where the Monte Carlo algorithm is concerned, there appears to be a very large trade-off between speed and performance.
+This adjustment makes the Monte Carlo tree search run much faster, but with a serious impact on performance. With this in effect, the Monte Carlo agent won only 71% of 100 matches against the minimax agent, lowering its rate of victory by more than 15%. Where the Monte Carlo algorithm is concerned, there appears to be a very large trade-off between speed and performance.
 
 So how to fix this? One possible answer: Use NumPy instead of the built-in `math` package. While NumPy can't function with `isolation.py` for use in this project, it would make the program run much more quickly than the 'math' package by enabling it to perform calculations across entire vectors of numbers. This is critical because in order to be effective, Monte Carlo tree search must explore and test a large number of nodes.
 
