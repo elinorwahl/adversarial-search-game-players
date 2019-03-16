@@ -68,9 +68,9 @@ def monte_carlo_uct(self, state):
 		return random.choice(state.actions())
 	for i in range(1, 100):
         leaf = self.tree_policy(root)
-	    # Return to the top of the search loop if no best child is found
+	# Return to the top of the search loop if no best child is found
         if not leaf:
-			continue
+		continue
         value = self.rollout_policy(leaf, state.player())
         self.backprop(leaf, value)
     result = root.children.index(self.best_child(root, 0))
