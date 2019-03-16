@@ -47,7 +47,7 @@ However - the Monte Carlo agent takes considerably longer to play matches than t
             buffer = 50.
             delta = (TIME_LIMIT-buffer) / 1000.
         else:
-            # delta = 0.1
+            delta = 0.1
         timer_end  = time.time() + delta
         root = Node(state)
         if root.state.terminal_test():
