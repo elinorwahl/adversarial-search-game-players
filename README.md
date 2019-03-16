@@ -52,7 +52,7 @@ def monte_carlo_uct(self, state):
     root = Node(state)
     while time.time() < timer_end:
         leaf = self.tree_policy(root)
-		value = self.rollout_policy(leaf, state.player())
+	value = self.rollout_policy(leaf, state.player())
         self.backprop(leaf, value)
     result = root.children.index(self.best_child(root, 0))
     return root.child_actions[result]
