@@ -190,7 +190,7 @@ class MonteCarloUCTPlayer(DataPlayer):
         if 'TIME_LIMIT' in globals():
             # buffer = 50. # for slower but better performance
             buffer = 75. # for faster but decreased performance
-            delta = (TIME_LIMIT-buffer) / 1000.
+            delta = (TIME_LIMIT - buffer) / 1000.
         else:
             # delta = 0.1 # for slower but better performance
             delta = 0.025 # for faster but decreased performance
