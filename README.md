@@ -60,25 +60,11 @@ However - the Monte Carlo agent takes considerably longer to play matches than t
         return root.child_actions[result]
 ```
 
-This agent, while extremely successful at Isolation, runs slowly enough that it sometimes can't make a move within the allotted time limit of 150 milliseconds. The version of the function that can meet the time limit is this:
+This agent, while extremely successful at Isolation, runs slowly enough that it sometimes can't make a move within the allotted time limit of 150 milliseconds. The time limit can be met by changing two lines: 
 
-``` 
-    def monte_carlo_uct(self, state):
-        if 'TIME_LIMIT' in globals():
-            buffer = 75.
-            delta = (TIME_LIMIT-buffer) / 1000.
-        else:
-            delta = 0.025
-        timer_end  = time.time() + delta
-        root = Node(state)
-        if root.state.terminal_test():
-            return random.choice(state.actions())
-        while time.time() < timer_end:
-            leaf = self.tree_policy(root)
-            value = self.rollout_policy(leaf, state.player())
-            self.backprop(leaf, value)
-        result = root.children.index(self.best_child(root, 0))
-        return root.child_actions[result]
+```
+buffer = 75. 
+delta = 0.025
 ```
 
 This adjustment makes the Monte Carlo tree search run much faster, but with a serious impact on performance. With this in effect, the Monte Carlo agent won only 71% of 100 matches against the minimax agent, lowering its rate of victory by more than 15%. Where the Monte Carlo algorithm is concerned, there appears to be a very large trade-off between speed and performance.
