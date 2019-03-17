@@ -52,7 +52,7 @@ However - the Monte Carlo agent takes considerably longer to play matches than t
         root = Node(state)
         if root.state.terminal_test():
             return random.choice(state.actions())
-      simple  while time.time() < timer_end:
+        while time.time() < timer_end:
             leaf = self.tree_policy(root)
             value = self.rollout_policy(leaf, state.player())
             self.backprop(leaf, value)
